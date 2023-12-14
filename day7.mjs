@@ -13,7 +13,7 @@ const furtherParse = (arr) => {
 
 const sampleData = furtherParse(sample);
 const data = furtherParse(d);
-console.log(sampleData);
+console.log(data);
 
 const cardValues = new Map();
 cardValues.set("A", 1);
@@ -63,14 +63,16 @@ const nameHand = (handObj) => {
     five ||
     (four && jacks === 1) ||
     (three && jacks === 2) ||
-    (two && jacks === 3)
+    (two && jacks === 3) ||
+    (one && jacks === 4) ||
+    jacks === 5
   )
     return "a";
   if (
     four ||
-    (three && jacks === 2) ||
+    (three && jacks === 1) ||
     (two && jacks === 2) ||
-    (one && jacks === 1)
+    (one && jacks === 3)
   )
     return "b";
   if ((three && two) || (twoPair && jacks === 1)) return "c";
@@ -92,9 +94,12 @@ const tallyHand = (hand) => {
   return nameHand(result);
 };
 
-const handsBids = sampleData.map((a) => {
+/// CHANGE INPUT HERE
+const handsBids = data.map((a) => {
   return [tallyHand(a[0]), a[1], a[0]];
 });
+
+//// CHANGE INPUT HERE
 
 const sortHands = (arr) => {
   const map = new Map();
@@ -173,7 +178,7 @@ const tally = (arr) => {
   return sum;
 };
 
-console.log(tally(sortedArr));
+// console.log(tally(sortedArr));
 
 /*
     after tallying hand we can determine what kind of hand it is 
