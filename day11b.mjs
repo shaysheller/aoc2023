@@ -4,46 +4,43 @@ const s = parse("day11sample.txt");
 const d = parse("day11.txt");
 const stransform = parse("day11sampletransformed.txt");
 
-const addRowsCols = (arr) => {
-  const result = [];
+/// this function needs to find the numbers of rows and columns that are empty between [x1,y1] and [x2,y2]
 
-  for (let row of arr) {
-    if (!row.includes("#")) {
-      result.push(row);
+// could also store in two sets -> one row set one col set
+// if the row or col is in the set that means it was empty
+
+const findRowsAndCols = (arr) => {
+  let rows = new Set();
+  let cols = new Set();
+
+  for (let i = 0; i < arr.length; i++) {
+    if (!arr[i].includes("#")) {
+      rows.add(i);
     }
-    result.push(row);
   }
 
   let col = 0;
+  console.log("a");
 
-  while (col < result.length) {
+  while (col < arr[0].length) {
     let check = false;
-    for (let i = 0; i < result.length; i++) {
-      let elem = result[i][col];
-
+    for (let i = 0; i < arr.length; i++) {
+      let elem = arr[i][col];
       if (elem === "#") {
         check = true;
         break;
       }
     }
     if (!check) {
-      for (let i = 0; i < result.length; i++) {
-        let string = result[i];
-        // console.log(string);
-        result[i] = string.slice(0, col) + "." + string.slice(col);
-        // console.log(result[i]);
-      }
-      col++;
+      cols.add(col);
     }
     col++;
   }
-
-  return result;
+  console.log("b");
+  return [rows, cols];
 };
-// const n = addRowsCols(s);
 
 const replace = (arr) => {
-  const result = [];
   let count = 1;
   const map = new Map();
   for (let i = 0; i < arr.length; i++) {
@@ -53,30 +50,54 @@ const replace = (arr) => {
       row = row.replace("#", "X");
       count++;
     }
-    result.push(row);
   }
 
-  return [result, map];
+  return map;
 };
-const [replaced, map] = replace(addRowsCols(d));
-// console.log(map);
-// console.log(replaced);
+const map = replace(d);
+const [rowSet, colSet] = findRowsAndCols(d);
 
-const findDistances = (arr, map) => {
+console.log(map);
+console.log(rowSet, colSet);
+
+const multiplier = ([x1, y1], [x2, y2], multiplier) => {
+  let c = 0;
+  let r = 0;
+
+  // horizontal distance,  need to know how many columns were added
+
+  for (let i = Math.min(y1, y2); i < Math.max(y1, y2); i++) {
+    if (colSet.has(i)) {
+      c = c + (multiplier - 1);
+    }
+    c++;
+  }
+
+  for (let i = Math.min(x1, x2); i < Math.max(x1, x2); i++) {
+    if (rowSet.has(i)) {
+      r = r + (multiplier - 1);
+    }
+    r++;
+  }
+
+  return c + r;
+};
+
+const findDistances = (map) => {
   let sum = 0;
 
   for (let i = 1; i <= map.size; i++) {
-    let key1 = i;
     let coord1 = map.get(i);
     for (let j = i + 1; j <= map.size; j++) {
-      let key2 = j;
       let coord2 = map.get(j);
-      sum += Math.abs(coord1[0] - coord2[0]) + Math.abs(coord1[1] - coord2[1]);
+      sum += multiplier([...coord1], [...coord2], 1000000);
     }
   }
   return sum;
 };
-console.log(findDistances(replaced, map));
+let res = findDistances(map);
+console.log(res);
+// console.log(findDistances(replaced, map));
 // const str = replaced.spli;
 // console.log(replaced.join("\n") === stransform.join("\n"));
 // console.log(replaced.join("\n"));
