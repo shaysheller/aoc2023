@@ -5,63 +5,7 @@ import * as fs from "fs";
 const s = parse("day10sample.txt");
 const d = parse("day10.txt");
 
-// console.log(directions);
-// console.log(s);
-
 const run = (arr) => {
-  //   const visited = new Set();
-
-  //   const dfs = (row, col, path, prev) => {
-  //     let curr = arr[row][col];
-  //     let space = `${row} ${col}`;
-  //     let dir = [prev[0] - row, prev[1] - col];
-  //     const nextPrev = [row, col];
-  //     console.log(path.length);
-
-  //     if (curr === "S") return path;
-  //     path.push(`${row} ${col}`);
-
-  //     if (dir[0] === -1) {
-  //       // going down
-  //       if (curr === "|") {
-  //         return dfs(row + 1, col, path, nextPrev);
-  //       } else if (curr === "J") {
-  //         return dfs(row, col - 1, path, nextPrev);
-  //       } else if (curr === "L") {
-  //         return dfs(row, col + 1, path, nextPrev);
-  //       }
-  //     } else if (dir[0] === 1) {
-  //       // going up
-  //       if (curr === "|") {
-  //         return dfs(row - 1, col, path, nextPrev);
-  //       } else if (curr === "7") {
-  //         return dfs(row, col - 1, path, nextPrev);
-  //       } else if (curr === "F") {
-  //         return dfs(row, col + 1, path, nextPrev);
-  //       }
-  //     } else if (dir[1] === -1) {
-  //       // going right
-  //       if (curr === "-") {
-  //         return dfs(row, col + 1, path, nextPrev);
-  //       } else if (curr === "7") {
-  //         return dfs(row + 1, col, path, nextPrev);
-  //       } else if (curr === "J") {
-  //         return dfs(row - 1, col, path, nextPrev);
-  //       }
-  //     } else {
-  //       // going left
-  //       if (curr === "-") {
-  //         return dfs(row, col - 1, path, nextPrev);
-  //       } else if (curr === "F") {
-  //         return dfs(row + 1, col, path, nextPrev);
-  //       } else if (curr === "L") {
-  //         return dfs(row - 1, col, path, nextPrev);
-  //       }
-  //     }
-
-  //     return path;
-  //   };
-
   const doWhile = (row, col, prev) => {
     const result = [[...prev]];
     console.log("intial result", result);

@@ -19,12 +19,15 @@ const run = (data) => {
   });
   //   return parsed;
 
-  const fword = Object.keys(parsed)
-    .filter((a) => a[2] === "A")
-    .map((b) => {
-      console.log(b);
-      return countSteps(b, parsed, path);
-    });
+  const fword = findlcm(
+    Object.keys(parsed)
+      .filter((a) => a[2] === "A")
+      .map((b) => {
+        console.log(b);
+        return countSteps(b, parsed, path);
+      }),
+    Object.keys(parsed).filter((a) => a[2] === "A").length
+  );
   console.log(fword);
 
   return fword;
